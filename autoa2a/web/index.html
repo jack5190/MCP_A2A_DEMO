@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>0xAuto / AutoA2A — Automation Console</title>
+<style>
+  :root {
+    --bg: #0b0f1a;
+    --panel: #121829;
+    --panel-2: #0e1424;
+    --line: #223052;
+    --text: #e7ecf5;
+    --muted: #8ea0c0;
+    --accent: #4f8cff;
+    --green: #35d07f;
+    --red: #ff5c72;
+    --amber: #ffb84d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: radial-gradient(1200px 600px at 80% -10%, #1a2440 0%, var(--bg) 55%);
+    color: var(--text); font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  header {
+    padding: 18px 24px; border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; gap: 16px; position: sticky; top: 0;
+    background: rgba(11,15,26,.85); backdrop-filter: blur(8px); z-index: 5;
+  }
+  header h1 { font-size: 18px; margin: 0; letter-spacing: .3px; }
+  header .tag { color: var(--muted); font-size: 12px; }
+  .live { margin-left: auto; display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); animation: pulse 1.6s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+  main { padding: 20px 24px; max-width: 1400px; margin: 0 auto; }
+  .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+  .card { background: linear-gradient(180deg, var(--panel), var(--panel-2)); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+  .card h2 { margin: 0 0 12px; font-size: 13px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); }
+  .col-4 { grid-column: span 4; } .col-6 { grid-column: span 6; }
+  .col-8 { grid-column: span 8; } .col-12 { grid-column: span 12; }
+  @media (max-width: 980px){ .col-4,.col-6,.col-8 { grid-column: span 12; } }
+  .prices { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { background: #0b1220; border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; min-width: 110px; }
+  .chip .s { color: var(--muted); font-size: 11px; }
+  .chip .p { font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; }
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+  .pill.success { background: rgba(53,208,127,.15); color: var(--green); }
+  .pill.skipped { background: rgba(142,160,192,.15); color: var(--muted); }
+  .pill.failed, .pill.insufficient_credits { background: rgba(255,92,114,.15); color: var(--red); }
+  .pill.schedule { background: rgba(79,140,255,.15); color: var(--accent); }
+  .pill.price { background: rgba(255,184,77,.15); color: var(--amber); }
+  .pill.webhook { background: rgba(53,208,127,.15); color: var(--green); }
+  .pill.signal { background: rgba(180,120,255,.18); color: #c39bff; }
+  button { font: inherit; cursor: pointer; border-radius: 9px; border: 1px solid var(--line); background: #16203a; color: var(--text); padding: 6px 10px; }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #04122e; font-weight: 700; }
+  button.mini { padding: 3px 8px; font-size: 12px; }
+  input, select, textarea { font: inherit; background: #0b1220; color: var(--text); border: 1px solid var(--line); border-radius: 9px; padding: 8px 10px; width: 100%; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  label { font-size: 11px; color: var(--muted); display: block; margin-bottom: 4px; }
+  .muted { color: var(--muted); }
+  .agent { border: 1px solid var(--line); border-radius: 12px; padding: 12px; margin-bottom: 10px; }
+  .agent .top { display: flex; align-items: center; gap: 8px; }
+  .agent .name { font-weight: 600; }
+  .agent .acts { margin-left: auto; display: flex; gap: 6px; }
+  .flow { display:flex; flex-wrap:wrap; align-items:center; gap:8px; color:var(--muted); font-size:12px; }
+  .flow b { color: var(--text); }
+  .arrow { color: var(--accent); }
+  code { background:#0b1220; padding:1px 5px; border-radius:6px; font-size:12px; }
+  .scroll { max-height: 360px; overflow: auto; }
+  .num { font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<header>
+  <h1>0xAuto <span class="muted">/ AutoA2A</span></h1>
+  <span class="tag">Automate your strategy, powered by MCP + A2A</span>
+  <div class="live"><span class="dot"></span> live · scheduler ticking</div>
+</header>
+
+<main>
+  <div class="grid">
+    <section class="card col-12">
+      <h2>Architecture flow</h2>
+      <div class="flow">
+        <b>Trigger</b> <span class="muted">(time / market / social / on-chain)</span>
+        <span class="arrow">→</span> <b>Fast-model analysis</b>
+        <span class="arrow">→</span> <b>Execution engine</b>
+        <span class="arrow">→</span> <b>MCP + DeFi tools</b>
+        <span class="arrow">→</span> <b>Custody vault</b>
+        <span class="arrow">→</span> <b>A2A signal fan-out</b>
+      </div>
+    </section>
+
+    <section class="card col-8">
+      <h2>Market feed (simulated)</h2>
+      <div class="prices" id="prices"></div>
+    </section>
+
+    <section class="card col-4">
+      <h2>MCP tools</h2>
+      <div id="tools" class="muted"></div>
+    </section>
+
+    <section class="card col-6">
+      <h2>Agents</h2>
+      <div id="agents"></div>
+      <details style="margin-top:12px">
+        <summary style="cursor:pointer" class="muted">+ New agent</summary>
+        <div style="margin-top:12px">
+          <div class="form-row">
+            <div><label>Name</label><input id="f-name" value="My ETH DCA" /></div>
+            <div><label>Owner</label><input id="f-owner" value="demo-user" /></div>
+          </div>
+          <div class="form-row">
+            <div><label>Chain</label><select id="f-chain"><option>ETH</option><option>BSC</option></select></div>
+            <div><label>Cost tier</label><select id="f-tier"><option>low</option><option selected>medium</option><option>high</option></select></div>
+          </div>
+          <div class="form-row">
+            <div><label>Trigger</label><select id="f-ttype" onchange="onTriggerChange()">
+              <option value="schedule">schedule</option>
+              <option value="price">price</option>
+              <option value="webhook">webhook</option>
+              <option value="signal">signal</option>
+            </select></div>
+            <div id="f-trigger-cfg"></div>
+          </div>
+          <div class="form-row">
+            <div><label>Action</label><select id="f-atype">
+              <option value="swap">swap</option><option value="stake">stake</option>
+              <option value="mint">mint</option><option value="bridge">bridge</option>
+            </select></div>
+            <div><label>Publish signal (A2A, optional)</label><input id="f-pub" placeholder="e.g. eth_dip_buy" /></div>
+          </div>
+          <div class="form-row">
+            <div><label>token_in / token</label><input id="f-tin" value="USDC" /></div>
+            <div><label>token_out / collection</label><input id="f-tout" value="ETH" /></div>
+          </div>
+          <div class="form-row">
+            <div><label>amount</label><input id="f-amt" value="100" /></div>
+            <div style="display:flex;align-items:flex-end"><button class="primary" style="width:100%" onclick="createAgent()">Create agent</button></div>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <section class="card col-6">
+      <h2>Custody vaults & credits</h2>
+      <div id="vault"></div>
+      <h2 style="margin-top:16px">Send test webhook</h2>
+      <div class="form-row">
+        <div><label>Webhook agent</label><select id="wh-agent"></select></div>
+        <div><label>Text (KOL/TradingView)</label><input id="wh-text" value="ape into PEPE, breakout, moon" /></div>
+      </div>
+      <button onclick="sendWebhook()">POST webhook</button>
+    </section>
+
+    <section class="card col-8">
+      <h2>Execution history</h2>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Time</th><th>Agent</th><th>Status</th><th>Reason</th><th>Conf.</th><th>Credits</th><th>Actions</th></tr></thead>
+          <tbody id="execs"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card col-4">
+      <h2>A2A signal bus</h2>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Time</th><th>Type</th><th>Symbol</th><th>From</th></tr></thead>
+          <tbody id="signals"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const fmtTime = (t) => new Date(t * 1000).toLocaleTimeString();
+async function api(path, opts) {
+  const r = await fetch(path, opts);
+  if (!r.ok) throw new Error(await r.text());
+  return r.status === 204 ? null : r.json();
+}
+function fmtPrice(p) {
+  if (p >= 100) return p.toFixed(2);
+  if (p >= 1) return p.toFixed(3);
+  return p.toPrecision(3);
+}
+
+function onTriggerChange() {
+  const t = $("f-ttype").value;
+  const el = $("f-trigger-cfg");
+  if (t === "schedule") el.innerHTML = '<label>every_seconds</label><input id="f-cfg1" value="10" />';
+  else if (t === "price") el.innerHTML = '<label>symbol / op / value</label><input id="f-cfg1" value="ETH lt 3100" />';
+  else if (t === "signal") el.innerHTML = '<label>signal_type</label><input id="f-cfg1" value="eth_dip_buy" />';
+  else el.innerHTML = '<label class="muted">no config</label><input id="f-cfg1" value="" disabled />';
+}
+onTriggerChange();
+
+function buildTrigger() {
+  const t = $("f-ttype").value;
+  const raw = ($("f-cfg1")?.value || "").trim();
+  if (t === "schedule") return { type: t, config: { every_seconds: parseFloat(raw) || 10 } };
+  if (t === "price") { const [symbol, op, value] = raw.split(/\s+/); return { type: t, config: { symbol: symbol || "ETH", op: op || "lt", value: parseFloat(value) || 3000 } }; }
+  if (t === "signal") return { type: t, config: { signal_type: raw || "generic" } };
+  return { type: "webhook", config: {} };
+}
+function buildAction() {
+  const at = $("f-atype").value;
+  const tin = $("f-tin").value, tout = $("f-tout").value, amt = parseFloat($("f-amt").value) || 0;
+  if (at === "swap") return { type: at, params: { token_in: tin, token_out: tout, amount_in: amt } };
+  if (at === "stake") return { type: at, params: { token: tin, amount: amt } };
+  if (at === "mint") return { type: at, params: { collection: tout, count: Math.max(1, Math.round(amt)) } };
+  return { type: at, params: { token: tin, amount: amt, to_chain: "BSC" } };
+}
+async function createAgent() {
+  const body = {
+    name: $("f-name").value, owner: $("f-owner").value, chain: $("f-chain").value,
+    cost_tier: $("f-tier").value, trigger: buildTrigger(), actions: [buildAction()],
+    publish_signal: $("f-pub").value.trim() || null,
+  };
+  try { await api("/api/agents", { method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify(body) }); refresh(); }
+  catch (e) { alert("Create failed: " + e.message); }
+}
+async function toggleAgent(id, enabled) { await api(`/api/agents/${id}`, { method:"PATCH", headers:{"Content-Type":"application/json"}, body: JSON.stringify({enabled})}); refresh(); }
+async function runAgent(id) { await api(`/api/agents/${id}/run`, { method:"POST" }); refresh(); }
+async function deleteAgent(id) { await api(`/api/agents/${id}`, { method:"DELETE" }); refresh(); }
+async function sendWebhook() {
+  const id = $("wh-agent").value; if (!id) return;
+  await api(`/api/webhook/${id}`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ text: $("wh-text").value }) });
+  refresh();
+}
+
+function renderPrices(p) {
+  $("prices").innerHTML = Object.entries(p).map(([s,v]) =>
+    `<div class="chip"><div class="s">${s}</div><div class="p num">$${fmtPrice(v)}</div></div>`).join("");
+}
+function renderTools(ts) {
+  $("tools").innerHTML = ts.map(t => `<div><code>${t.name}</code> — ${t.description}</div>`).join("");
+}
+function renderAgents(as) {
+  $("agents").innerHTML = as.map(a => {
+    const acts = a.actions.map(ac => `${ac.type}(${Object.values(ac.params).join(", ")})`).join(" · ");
+    return `<div class="agent">
+      <div class="top">
+        <span class="pill ${a.trigger.type}">${a.trigger.type}</span>
+        <span class="name">${a.name}</span>
+        <span class="acts">
+          <button class="mini" onclick="runAgent('${a.id}')">Run</button>
+          <button class="mini" onclick="toggleAgent('${a.id}', ${!a.enabled})">${a.enabled ? "Pause" : "Resume"}</button>
+          <button class="mini" onclick="deleteAgent('${a.id}')">✕</button>
+        </span>
+      </div>
+      <div class="muted" style="margin-top:6px">
+        ${a.owner} · ${a.chain} · tier <b>${a.cost_tier}</b>
+        ${a.publish_signal ? `· publishes <code>${a.publish_signal}</code>` : ""}
+      </div>
+      <div style="margin-top:6px">${acts || '<span class="muted">no actions</span>'}</div>
+    </div>`;
+  }).join("");
+
+  const webhookAgents = as.filter(a => a.trigger.type === "webhook");
+  $("wh-agent").innerHTML = webhookAgents.map(a => `<option value="${a.id}">${a.name}</option>`).join("")
+    || '<option value="">(no webhook agents)</option>';
+}
+function renderVault(accts) {
+  $("vault").innerHTML = accts.map(a => {
+    const bals = Object.entries(a.balances).map(([t,v]) => `${t}: <span class="num">${(+v).toPrecision(5)}</span>`).join(" · ");
+    const staked = Object.entries(a.staked).map(([t,v]) => `${t}: ${(+v).toPrecision(4)}`).join(", ");
+    return `<div class="agent"><div class="top"><span class="name">${a.owner}</span>
+      <span class="acts muted">credits: <b>${a.credits}</b></span></div>
+      <div class="muted" style="margin-top:6px">${bals || "empty"}</div>
+      ${staked ? `<div class="muted">staked: ${staked}</div>` : ""}
+    </div>`;
+  }).join("");
+}
+function renderExecs(es) {
+  $("execs").innerHTML = es.map(e => {
+    const acts = e.results.map(r => `${r.ok ? "✅" : "❌"} ${r.type}`).join(" ");
+    return `<tr>
+      <td class="muted num">${fmtTime(e.timestamp)}</td>
+      <td>${e.agent_name}</td>
+      <td><span class="pill ${e.status}">${e.status}</span></td>
+      <td class="muted">${e.trigger_reason}</td>
+      <td class="num">${e.confidence.toFixed(2)}</td>
+      <td class="num">${e.credits_spent}</td>
+      <td>${acts}</td>
+    </tr>`;
+  }).join("");
+}
+function renderSignals(ss) {
+  $("signals").innerHTML = ss.map(s => `<tr>
+    <td class="muted num">${fmtTime(s.timestamp)}</td>
+    <td><code>${s.type}</code></td>
+    <td>${s.symbol || "—"}</td>
+    <td class="muted">${s.source_agent_name}</td>
+  </tr>`).join("");
+}
+
+async function refresh() {
+  try {
+    const [prices, tools, agents, vault, execs, signals] = await Promise.all([
+      api("/api/prices"), api("/api/tools"), api("/api/agents"),
+      api("/api/vault"), api("/api/executions?limit=40"), api("/api/signals?limit=30"),
+    ]);
+    renderPrices(prices); renderTools(tools); renderAgents(agents);
+    renderVault(vault); renderExecs(execs); renderSignals(signals);
+  } catch (e) { /* transient */ }
+}
+refresh();
+setInterval(refresh, 2000);
+</script>
+</body>
+</html>

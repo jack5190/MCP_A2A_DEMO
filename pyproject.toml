@@ -1,0 +1,30 @@
+[project]
+name = "autoa2a"
+version = "0.1.0"
+description = "0xAuto / AutoA2A - a 7x24 automated crypto strategy execution engine powered by MCP and A2A (demo)"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "pydantic>=2.7",
+    "mcp>=1.10",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "httpx>=0.27"]
+
+[project.scripts]
+autoa2a = "autoa2a.__main__:main"
+autoa2a-mcp = "autoa2a.mcp_server:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["autoa2a*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

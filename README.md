@@ -1,6 +1,19 @@
 # MCP_A2A_DEMO
  0xAuto: Automate your strategy, powered by MCP!
 
+> **This repo now contains a runnable demo** of the architecture described
+> below — a 7×24 automated execution engine that wires together triggers →
+> fast‑model analysis → an **MCP‑native** DeFi execution engine → a simulated
+> custody vault, plus an **A2A** (agent‑to‑agent) signal bus for copy‑trading.
+>
+> ```bash
+> pip install -r requirements.txt
+> python -m autoa2a            # open http://127.0.0.1:8000
+> ```
+>
+> Jump to **[Running the demo](#running-the-demo)** for details. Everything is
+> simulated in‑memory — no keys, funds, or live RPC endpoints required.
+
 项目亮点：智能交易策略，结合AI决策和Web3执行
 
 
@@ -298,13 +311,97 @@ Billing
 Simple credit balance + manual top-up
 Defer to v2: KOL NLP, copy-trading revenue share, TEE, multi-chain bridge.
 
-What I Can Do Next
-Pick one (or combine) and I'll start immediately:
+---
 
-Bootstrap repo — monorepo layout (apps/web, packages/contracts, services/executor, etc.) with README and dev scripts
-Architecture doc — API design, agent schema, trigger types, custody flow
-Smart contracts — custody vault + permission model (Hardhat/Foundry)
-Frontend shell — Next.js + WalletConnect + agent config UI
-MCP executor — minimal agent runner that calls MCP tools on a cron/webhook
-Investor deck / one-pager — distill this brief into slides or English pitch copy
-Which direction do you want first? If you have preferences (stack, chains, Foundry vs Hardhat, Next vs Vite), say those too.
+# Running the demo
+
+This repository ships a **working reference implementation** of the pitch above.
+It is deliberately self‑contained: all on‑chain effects are simulated against an
+in‑memory custody vault, and the market is a simulated price feed, so the whole
+system runs locally with **no wallets, keys, funds, or RPC endpoints**.
+
+## What was built
+
+| Layer (from the pitch) | In this repo |
+| --- | --- |
+| Strategy / Agent config | `autoa2a/models.py` — pydantic `Agent`, `Trigger`, `Action` schema |
+| Trigger engine (time / market / social / on‑chain) | `autoa2a/engine.py` scheduler + webhook + A2A signal routing |
+| Fast‑model analysis | `autoa2a/fast_model.py` — price thresholds, KOL/news sentiment, signal gating |
+| Execution engine → **MCP + DeFi** | `autoa2a/mcp_tools.py` (`swap`/`stake`/`mint`/`bridge`) exposed both in‑process **and** over the Model Context Protocol via `autoa2a/mcp_server.py` |
+| Custody smart contract | `autoa2a/vault.py` — simulated per‑user custody vault + credit ledger |
+| Credit‑based execution tiers | `CostTier` low/medium/high, charged per successful run |
+| **A2A** / copy‑trading marketplace | `autoa2a/a2a.py` — agents publish signals; subscriber agents (copy‑traders) react |
+| Frontend (agent builder, history, wallet view) | `autoa2a/web/index.html` served by the FastAPI app |
+
+## Quick start
+
+```bash
+pip install -r requirements.txt
+
+# 1) Web console (agent builder + live execution history + A2A signal bus)
+python -m autoa2a                      # http://127.0.0.1:8000
+python -m autoa2a --port 9000 --no-seed
+
+# 2) Run the test suite
+pytest
+
+# 3) Run the DeFi tools as a real MCP server (stdio transport)
+python -m autoa2a.mcp_server
+```
+
+The web console seeds four agents that demonstrate every trigger type:
+
+1. **DCA into ETH** — a `schedule` trigger swapping USDC→ETH on a fixed cadence.
+2. **Buy the dip (ETH < 3100)** — a `price` trigger (edge‑triggered) that also
+   **publishes an `eth_dip_buy` A2A signal** on success.
+3. **Copy‑trader** — a `signal` trigger that mirrors the dip‑buyer's trades
+   (the copy‑trading / event fan‑out primitive).
+4. **KOL / TradingView webhook → PEPE** — a `webhook` trigger whose fast‑model
+   does keyword sentiment analysis and only fires on bullish text.
+
+## How a trigger becomes an on‑chain action
+
+```
+Trigger (time / market / social / on-chain)
+  → Fast-model analysis  (should we execute? confidence + rationale)
+  → Charge execution credits (low / medium / high tier)
+  → Execution engine calls MCP DeFi tools (swap / stake / mint / bridge)
+  → Custody vault balances update (auditable, no key exposure)
+  → Optionally publish an A2A signal → fan out to subscriber / copy-trade agents
+```
+
+## HTTP API
+
+| Method & path | Purpose |
+| --- | --- |
+| `GET /` | Web console (dashboard) |
+| `GET /api/agents` · `POST /api/agents` | List / create agents |
+| `PATCH /api/agents/{id}` · `DELETE /api/agents/{id}` | Pause/resume/rename / delete |
+| `POST /api/agents/{id}/run` | Manually fire an agent now |
+| `POST /api/webhook/{id}` | Inbound webhook (e.g. TradingView) `{ "text": "...", "symbol": "..." }` |
+| `GET /api/executions` | Execution history |
+| `GET /api/signals` | A2A signal bus |
+| `GET /api/prices` · `GET /api/vault` · `GET /api/tools` | Market feed / vaults / MCP tool catalog |
+
+## Using the MCP server
+
+`autoa2a/mcp_server.py` exposes the exact same DeFi tools over the Model Context
+Protocol, so any MCP client (Cursor, Claude Desktop, another A2A agent) can drive
+the custody vault. Example client config:
+
+```json
+{
+  "mcpServers": {
+    "autoa2a-defi": { "command": "python", "args": ["-m", "autoa2a.mcp_server"] }
+  }
+}
+```
+
+Tools: `get_price`, `get_balance`, `swap`, `stake`, `mint`, `bridge`, `deposit`.
+
+## Scope note
+
+Per the pitch's MVP scope, this demo focuses on the agent builder, the trigger /
+execution / custody loop, credit billing, MCP‑native actions, and A2A copy‑trading.
+Deferred to a future iteration (as in the original brief): real on‑chain contracts
+& RPC, KOL NLP at scale, TEE, and cross‑chain bridging beyond the simulated stub.
