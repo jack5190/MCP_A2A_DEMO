@@ -1,6 +1,48 @@
 # MCP_A2A_DEMO
  0xAuto: Automate your strategy, powered by MCP!
 
+> **Runnable demo included.** This repo now ships a working full-stack demo of the
+> MCP-native, Agent-to-Agent (A2A) execution engine described below. See
+> [Local development](#local-development-demo) to run it.
+
+## Local development (demo)
+
+A minimal, self-contained implementation of the 0xAuto concept lives in this
+monorepo (npm workspaces):
+
+| Path | What it is |
+| --- | --- |
+| `packages/mcp-server` | An **MCP server** exposing mock DeFi tools (`list_markets`, `get_price`, `get_portfolio`, `swap_tokens`, `stake`). Runs standalone over stdio or in-process. |
+| `apps/web` | A **Next.js** agent-builder UI + an **A2A executor** (`Coordinator` → `PriceWatcher` → `Trader`) that connects to the MCP server as a real MCP client and calls DeFi tools. |
+
+### Prerequisites
+
+- Node.js >= 20 (developed on Node 22)
+
+### Install & run
+
+```bash
+npm install          # install all workspace dependencies
+npm run dev          # start the web app at http://localhost:3000
+```
+
+Then open http://localhost:3000, configure an agent (e.g. "buy ETH when price is
+below 4000"), and click **Run agent** to watch the A2A message flow and MCP tool
+calls execute against the mock DeFi backend.
+
+### Other commands
+
+```bash
+npm run build        # build the MCP server package + the Next.js app
+npm run lint         # lint the web app
+npm run typecheck    # typecheck all workspaces
+npm test             # run the MCP server tests (real in-memory MCP client/server)
+npm run mcp          # run the DeFi MCP server standalone over stdio
+```
+
+---
+
+
 项目亮点：智能交易策略，结合AI决策和Web3执行
 
 
