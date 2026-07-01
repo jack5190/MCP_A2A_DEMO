@@ -219,23 +219,20 @@ export default function Home() {
                   </span>{" "}
                   <span className="muted">{result.summary}</span>
                 </div>
-                {result.messages.map((m) => {
-                  const call = result.mcpCalls.find((c) => c.step === m.step && c.agent === m.from);
-                  return (
-                    <div className="trace-msg" key={`${m.step}-${m.from}`}>
-                      <div className="who">
-                        {m.from} <span className="arrow">→</span> {m.to} <span className="muted">· {m.intent}</span>
-                      </div>
-                      <div className="detail">{m.detail}</div>
-                      {call && (
-                        <div className="mcp">
-                          <b>MCP</b> {call.tool}({JSON.stringify(call.args)}) →{" "}
-                          {JSON.stringify(call.result)}
-                        </div>
-                      )}
+                {result.messages.map((m) => (
+                  <div className="trace-msg" key={`${m.step}-${m.from}`}>
+                    <div className="who">
+                      {m.from} <span className="arrow">→</span> {m.to} <span className="muted">· {m.intent}</span>
                     </div>
-                  );
-                })}
+                    <div className="detail">{m.detail}</div>
+                    {m.mcpCalls.map((call, i) => (
+                      <div className="mcp" key={i}>
+                        <b>MCP</b> {call.agent} called {call.tool}({JSON.stringify(call.args)}) →{" "}
+                        {JSON.stringify(call.result)}
+                      </div>
+                    ))}
+                  </div>
+                ))}
               </>
             )}
           </div>

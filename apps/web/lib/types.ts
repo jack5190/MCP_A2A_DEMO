@@ -33,20 +33,21 @@ export const agentConfigSchema = z.object({
 
 export type AgentConfig = z.infer<typeof agentConfigSchema>;
 
+export interface McpCall {
+  agent: string;
+  tool: string;
+  args: Record<string, unknown>;
+  result: unknown;
+}
+
 export interface A2AMessage {
   step: number;
   from: string;
   to: string;
   intent: string;
   detail: string;
-}
-
-export interface McpCall {
-  step: number;
-  agent: string;
-  tool: string;
-  args: Record<string, unknown>;
-  result: unknown;
+  /** MCP tool calls made by the sender in order to produce this message. */
+  mcpCalls: McpCall[];
 }
 
 export interface ExecutionResult {

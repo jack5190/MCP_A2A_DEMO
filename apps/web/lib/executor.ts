@@ -17,15 +17,20 @@ export async function runAgent(config: AgentConfig): Promise<ExecutionResult> {
   const messages: A2AMessage[] = [];
   const mcpCalls: McpCall[] = [];
   let step = 0;
+  // MCP calls made since the last A2A message; attached to the next message emitted.
+  let pending: McpCall[] = [];
 
   const say = (from: string, to: string, intent: string, detail: string) => {
     step += 1;
-    messages.push({ step, from, to, intent, detail });
+    messages.push({ step, from, to, intent, detail, mcpCalls: pending });
+    pending = [];
   };
 
   const record = async (agent: string, tool: string, args: Record<string, unknown>) => {
     const result = await callJsonTool(client, tool, args);
-    mcpCalls.push({ step, agent, tool, args, result });
+    const call: McpCall = { agent, tool, args, result };
+    mcpCalls.push(call);
+    pending.push(call);
     return result as any;
   };
 
