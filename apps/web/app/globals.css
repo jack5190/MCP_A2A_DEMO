@@ -1,0 +1,278 @@
+:root {
+  --bg: #0b0f1a;
+  --panel: #131a2b;
+  --panel-2: #1a2337;
+  --border: #26314d;
+  --text: #e6ecfb;
+  --muted: #8b98b8;
+  --accent: #5b8cff;
+  --accent-2: #38e0b0;
+  --danger: #ff6b6b;
+  --warn: #f5b656;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(1200px 600px at 20% -10%, #1a2542 0%, var(--bg) 55%);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--accent);
+}
+
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+
+header.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 30px;
+  letter-spacing: -0.02em;
+}
+
+.brand .tag {
+  color: var(--muted);
+  margin-top: 6px;
+  font-size: 14px;
+  max-width: 620px;
+}
+
+.pill {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--accent-2);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.card h2 {
+  margin: 0 0 14px;
+  font-size: 16px;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin: 12px 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--text);
+  font-size: 14px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.seg {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.seg button {
+  flex: 1;
+  padding: 8px;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.seg button.active {
+  border-color: var(--accent);
+  color: var(--text);
+  background: #22335e;
+}
+
+button.run {
+  margin-top: 18px;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, var(--accent), #7aa0ff);
+  color: #06122e;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+button.run:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.markets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.chip b {
+  color: var(--accent-2);
+}
+
+.stat {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.trace-msg {
+  border-left: 2px solid var(--border);
+  padding: 8px 0 8px 14px;
+  margin-left: 8px;
+  position: relative;
+}
+
+.trace-msg::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: 14px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.trace-msg .who {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.trace-msg .arrow {
+  color: var(--muted);
+}
+
+.trace-msg .detail {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.badge {
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.badge.ok {
+  background: rgba(56, 224, 176, 0.15);
+  color: var(--accent-2);
+}
+
+.badge.no {
+  background: rgba(245, 182, 86, 0.15);
+  color: var(--warn);
+}
+
+.mcp {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-top: 8px;
+  color: var(--muted);
+  overflow-x: auto;
+}
+
+.mcp b {
+  color: var(--accent);
+}
+
+.hist-item {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-top: 10px;
+  background: var(--panel-2);
+}
+
+.hist-item .top {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.error {
+  color: var(--danger);
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.section-gap {
+  margin-top: 20px;
+}
