@@ -1,5 +1,5 @@
 /**
- * In-memory mock DeFi backend for the 0xAuto demo.
+ * In-memory mock DeFi backend for the AutoA2A demo.
  *
  * This is intentionally deterministic-ish: each price read nudges the price by a
  * small pseudo-random walk seeded from a counter, so that price-threshold triggers

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "0xAuto — MCP + A2A DeFi Automation Demo",
+  title: "AutoA2A — MCP + A2A DeFi Automation Demo",
   description: "Configure agents that automate DeFi actions via the Model Context Protocol (MCP) and Agent-to-Agent (A2A) orchestration.",
 };
 

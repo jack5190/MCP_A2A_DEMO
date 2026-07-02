@@ -1,5 +1,5 @@
 {
-  "name": "@0xauto/web",
+  "name": "@autoa2a/web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@0xauto/mcp-server": "*",
+    "@autoa2a/mcp-server": "*",
     "@modelcontextprotocol/sdk": "^1.12.0",
     "next": "^15.1.6",
     "react": "^19.0.0",

@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   // The MCP server package ships TypeScript source directly, so let Next transpile it.
-  transpilePackages: ["@0xauto/mcp-server"],
+  transpilePackages: ["@autoa2a/mcp-server"],
   webpack: (config) => {
     // The MCP server package uses NodeNext-style ".js" import specifiers that point
     // at ".ts" source files. Teach webpack to resolve those to the TypeScript sources.

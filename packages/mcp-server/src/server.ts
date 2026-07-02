@@ -14,13 +14,13 @@ function textResult(payload: unknown) {
 }
 
 /**
- * Creates the 0xAuto DeFi MCP server, registering the DeFi tools that agents call.
+ * Creates the AutoA2A DeFi MCP server, registering the DeFi tools that agents call.
  * The same factory is used both by the standalone stdio server and by the web
  * executor (over an in-memory transport), so tool behaviour is identical everywhere.
  */
 export function createDefiMcpServer(): McpServer {
   const server = new McpServer({
-    name: "0xauto-defi",
+    name: "autoa2a-defi",
     version: "0.1.0",
   });
 

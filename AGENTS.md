@@ -2,7 +2,7 @@
 
 ## Project overview
 
-`0xAuto` / `AutoA2A` is a demo of an MCP-native, Agent-to-Agent (A2A) DeFi automation
+`AutoA2A` is a demo of an MCP-native, Agent-to-Agent (A2A) DeFi automation
 engine. It is an npm-workspaces monorepo:
 
 - `packages/mcp-server` — MCP server exposing mock DeFi tools (`list_markets`,

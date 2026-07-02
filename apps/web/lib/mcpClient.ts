@@ -1,9 +1,9 @@
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
-import { createDefiMcpServer } from "@0xauto/mcp-server";
+import { createDefiMcpServer } from "@autoa2a/mcp-server";
 
 /**
- * Connects an MCP client to the 0xAuto DeFi MCP server over an in-memory transport.
+ * Connects an MCP client to the AutoA2A DeFi MCP server over an in-memory transport.
  *
  * This performs a real MCP initialize handshake and tool discovery, using the exact
  * same server code that the standalone stdio service runs. The in-memory transport
@@ -12,7 +12,7 @@ import { createDefiMcpServer } from "@0xauto/mcp-server";
  */
 export async function connectDefiClient(): Promise<Client> {
   const server = createDefiMcpServer();
-  const client = new Client({ name: "0xauto-executor", version: "0.1.0" });
+  const client = new Client({ name: "autoa2a-executor", version: "0.1.0" });
   const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
   await Promise.all([server.connect(serverTransport), client.connect(clientTransport)]);
   return client;

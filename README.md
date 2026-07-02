@@ -1,5 +1,5 @@
 # MCP_A2A_DEMO
- 0xAuto: Automate your strategy, powered by MCP!
+ AutoA2A: Automate your strategy, powered by MCP!
 
 > **Runnable demo included.** This repo now ships a working full-stack demo of the
 > MCP-native, Agent-to-Agent (A2A) execution engine described below. See
@@ -7,7 +7,7 @@
 
 ## Local development (demo)
 
-A minimal, self-contained implementation of the 0xAuto concept lives in this
+A minimal, self-contained implementation of the AutoA2A concept lives in this
 monorepo (npm workspaces):
 
 | Path | What it is |
@@ -299,14 +299,14 @@ Agent创建和执行频率
 多链集成覆盖度
 项目价值
 
-AutoA2A 不仅仅是一个自动化工具，更是Web3生态系统向智能化、自动化发展的重要基础设施。通过降低复杂DeFi操作的门槛，提高执行效率，0xAuto有望：
+AutoA2A 不仅仅是一个自动化工具，更是Web3生态系统向智能化、自动化发展的重要基础设施。通过降低复杂DeFi操作的门槛，提高执行效率，AutoA2A有望：
 
 推动DeFi采用: 让更多用户能够参与复杂的DeFi策略
 提升市场效率: 自动化执行减少市场摩擦和延迟
 创新商业模式: 为策略提供者创造新的收入来源
 促进生态发展: 为Web3基础设施贡献重要组件
-0xAuto代表了Web3自动化的未来方向，通过技术创新和产品创新，为加密生态系统的成熟和发展提供了重要支撑。
-0xAuto Is
+AutoA2A代表了Web3自动化的未来方向，通过技术创新和产品创新，为加密生态系统的成熟和发展提供了重要支撑。
+AutoA2A Is
 A 7×24 automated execution layer that sits between strategy definition and on-chain action:
 
 Time

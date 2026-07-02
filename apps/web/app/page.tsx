@@ -86,7 +86,7 @@ export default function Home() {
       <header className="hero">
         <div className="brand">
           <span className="pill">MCP + A2A · live demo</span>
-          <h1>0xAuto</h1>
+          <h1>AutoA2A</h1>
           <div className="tag">
             Automate your strategy, powered by the Model Context Protocol. Configure an agent, and a Coordinator
             delegates to specialised PriceWatcher and Trader agents that call DeFi tools over MCP.
