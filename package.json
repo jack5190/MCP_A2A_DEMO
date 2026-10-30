@@ -14,9 +14,11 @@
     "lint": "npm run lint --workspace @0xauto/web",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "npm run test --workspace @0xauto/mcp-server",
-    "mcp": "npm run start --workspace @0xauto/mcp-server"
+    "mcp": "npm run start --workspace @0xauto/mcp-server",
+    "quant:demo": "npm run quant:demo --workspace @0xauto/mcp-server --",
+    "quant:test": "npm run test --workspace @0xauto/mcp-server"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=20.6.0"
   }
 }

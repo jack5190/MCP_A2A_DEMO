@@ -21,7 +21,7 @@ test("lists the expected DeFi tools", async () => {
   const client = await connectedClient();
   const { tools } = await client.listTools();
   const names = tools.map((t) => t.name).sort();
-  assert.deepEqual(names, ["get_portfolio", "get_price", "list_markets", "stake", "swap_tokens"]);
+  assert.deepEqual(names, ["get_portfolio", "get_price", "list_markets", "quant_evaluate", "quant_get_task", "quant_miner_predict", "stake", "swap_tokens"]);
 });
 
 test("get_price returns a positive number for a known market", async () => {

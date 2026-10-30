@@ -18,7 +18,8 @@
     "build": "tsc -p tsconfig.json",
     "start": "tsx src/stdio.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "tsx --test src/*.test.ts"
+    "test": "node --import tsx --test src/*.test.ts src/quant/*.test.ts",
+    "quant:demo": "node --import tsx src/quant-cli.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",

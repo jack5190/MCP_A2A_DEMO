@@ -1,6 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { defiState } from "./defi.js";
+import { registerQuantTools } from "./quant-tools.js";
 
 function textResult(payload: unknown) {
   return {
@@ -83,5 +84,6 @@ export function createDefiMcpServer(): McpServer {
     async ({ symbol, amount }) => textResult(defiState.stake(symbol, amount)),
   );
 
+  registerQuantTools(server);
   return server;
 }
