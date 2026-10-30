@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
 import type { AgentConfig, ExecutionResult } from "@/lib/types";
 
 interface MarketsResponse {
@@ -86,6 +87,7 @@ export default function Home() {
       <header className="hero">
         <div className="brand">
           <span className="pill">MCP + A2A · live demo</span>
+          <Link href="/quant" style={{ marginLeft: 12, fontSize: 13 }}>量化子网评分原型 →</Link>
           <h1>0xAuto</h1>
           <div className="tag">
             Automate your strategy, powered by the Model Context Protocol. Configure an agent, and a Coordinator

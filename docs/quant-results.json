@@ -1,0 +1,382 @@
+{
+  "note": "Synthetic mechanism demonstration; disqualified metrics are invalid placeholders, not performance claims. Zero-cost scenario is an unrealistic diagnostic.",
+  "scenarios": [
+    {
+      "options": {
+        "seed": 42,
+        "feeBps": 5,
+        "slippageBps": 5
+      },
+      "dataFingerprint": "6f6b9ddb20ced011070a84d57fe6b194c4bd87cbcd3165e272ba02f34b7dea81",
+      "policy": {
+        "version": "ideathon-score-v1",
+        "periodsPerYear": 365,
+        "minActiveDecisions": 10,
+        "excessReturnTarget": 0.1,
+        "sharpeTarget": 2,
+        "drawdownLimit": 0.3,
+        "missingProvenanceRisk": 0.4,
+        "weights": {
+          "excessReturn": 0.35,
+          "riskAdjusted": 0.35,
+          "drawdown": 0.2,
+          "consistency": 0.1
+        }
+      },
+      "benchmark": {
+        "netReturn": -0.22325446768713375,
+        "sharpe": -2.5046339224868364,
+        "maxDrawdown": 0.2990164326242368,
+        "volatility": 0.2898096683444672,
+        "activeDecisions": 120,
+        "periods": 120
+      },
+      "leaderboard": [
+        {
+          "rank": 1,
+          "minerId": "cash",
+          "status": "ineligible",
+          "score": 0,
+          "rewardWeight": 0,
+          "metrics": {
+            "netReturn": 0,
+            "sharpe": 0,
+            "maxDrawdown": 0,
+            "volatility": 0,
+            "activeDecisions": 0,
+            "periods": 120
+          },
+          "leakageRisk": 0,
+          "flags": [
+            "insufficient-active-decisions",
+            "non-positive-net-return",
+            "non-positive-or-undefined-sharpe"
+          ],
+          "components": {
+            "excessReturn": 1,
+            "riskAdjusted": 0,
+            "drawdown": 1,
+            "consistency": 0
+          }
+        },
+        {
+          "rank": 2,
+          "minerId": "long-only",
+          "status": "ineligible",
+          "score": 0,
+          "rewardWeight": 0,
+          "metrics": {
+            "netReturn": -0.22325446768713375,
+            "sharpe": -2.5046339224868364,
+            "maxDrawdown": 0.2990164326242368,
+            "volatility": 0.2898096683444672,
+            "activeDecisions": 120,
+            "periods": 120
+          },
+          "leakageRisk": 0,
+          "flags": [
+            "non-positive-net-return",
+            "non-positive-or-undefined-sharpe"
+          ],
+          "components": {
+            "excessReturn": 0,
+            "riskAdjusted": 0,
+            "drawdown": 0.0032785579192105008,
+            "consistency": 0.3333333333333333
+          }
+        },
+        {
+          "rank": 3,
+          "minerId": "mean-reversion",
+          "status": "ineligible",
+          "score": 0,
+          "rewardWeight": 0,
+          "metrics": {
+            "netReturn": -0.24727295942807326,
+            "sharpe": -4.000011684617182,
+            "maxDrawdown": 0.3244028771747475,
+            "volatility": 0.21025691914138905,
+            "activeDecisions": 120,
+            "periods": 120
+          },
+          "leakageRisk": 0,
+          "flags": [
+            "non-positive-net-return",
+            "non-positive-or-undefined-sharpe"
+          ],
+          "components": {
+            "excessReturn": 0,
+            "riskAdjusted": 0,
+            "drawdown": 0,
+            "consistency": 0.3333333333333333
+          }
+        },
+        {
+          "rank": 4,
+          "minerId": "momentum",
+          "status": "ineligible",
+          "score": 0,
+          "rewardWeight": 0,
+          "metrics": {
+            "netReturn": -0.057067895439422034,
+            "sharpe": -0.7463249468970735,
+            "maxDrawdown": 0.20447045058243318,
+            "volatility": 0.21000803664320553,
+            "activeDecisions": 120,
+            "periods": 120
+          },
+          "leakageRisk": 0,
+          "flags": [
+            "non-positive-net-return",
+            "non-positive-or-undefined-sharpe"
+          ],
+          "components": {
+            "excessReturn": 1,
+            "riskAdjusted": 0,
+            "drawdown": 0.31843183139188935,
+            "consistency": 0.6666666666666666
+          }
+        },
+        {
+          "rank": 5,
+          "minerId": "ridge",
+          "status": "ineligible",
+          "score": 0,
+          "rewardWeight": 0,
+          "metrics": {
+            "netReturn": -0.053916709495124615,
+            "sharpe": -1.181405552006459,
+            "maxDrawdown": 0.14116315251378808,
+            "volatility": 0.13497515589287162,
+            "activeDecisions": 120,
+            "periods": 120
+          },
+          "leakageRisk": 0,
+          "flags": [
+            "non-positive-net-return",
+            "non-positive-or-undefined-sharpe"
+          ],
+          "components": {
+            "excessReturn": 1,
+            "riskAdjusted": 0,
+            "drawdown": 0.529456158287373,
+            "consistency": 0.6666666666666666
+          }
+        },
+        {
+          "rank": 6,
+          "minerId": "future-leak",
+          "status": "disqualified",
+          "score": 0,
+          "rewardWeight": 0,
+          "metrics": {
+            "netReturn": 0,
+            "sharpe": 0,
+            "maxDrawdown": 0,
+            "volatility": 0,
+            "activeDecisions": 0,
+            "periods": 120
+          },
+          "leakageRisk": 1,
+          "flags": [
+            "future-feature-leak",
+            "insufficient-active-decisions",
+            "non-positive-net-return",
+            "non-positive-or-undefined-sharpe"
+          ],
+          "components": {
+            "excessReturn": 1,
+            "riskAdjusted": 0,
+            "drawdown": 1,
+            "consistency": 0
+          }
+        }
+      ]
+    },
+    {
+      "options": {
+        "seed": 42,
+        "feeBps": 0,
+        "slippageBps": 0
+      },
+      "dataFingerprint": "6f6b9ddb20ced011070a84d57fe6b194c4bd87cbcd3165e272ba02f34b7dea81",
+      "policy": {
+        "version": "ideathon-score-v1",
+        "periodsPerYear": 365,
+        "minActiveDecisions": 10,
+        "excessReturnTarget": 0.1,
+        "sharpeTarget": 2,
+        "drawdownLimit": 0.3,
+        "missingProvenanceRisk": 0.4,
+        "weights": {
+          "excessReturn": 0.35,
+          "riskAdjusted": 0.35,
+          "drawdown": 0.2,
+          "consistency": 0.1
+        }
+      },
+      "benchmark": {
+        "netReturn": -0.012273897576474901,
+        "sharpe": 0.014260647767196061,
+        "maxDrawdown": 0.19685703276306377,
+        "volatility": 0.2898096683444672,
+        "activeDecisions": 120,
+        "periods": 120
+      },
+      "leaderboard": [
+        {
+          "rank": 1,
+          "minerId": "momentum",
+          "status": "eligible",
+          "score": 80.29018581571049,
+          "rewardWeight": 0.6165080804581473,
+          "metrics": {
+            "netReturn": 0.11099705154467587,
+            "sharpe": 1.6312906941462704,
+            "maxDrawdown": 0.1488610199777387,
+            "volatility": 0.20974063635530973,
+            "activeDecisions": 120,
+            "periods": 120
+          },
+          "leakageRisk": 0,
+          "flags": [],
+          "components": {
+            "excessReturn": 1,
+            "riskAdjusted": 0.8156453470731352,
+            "drawdown": 0.5037966000742042,
+            "consistency": 0.6666666666666666
+          }
+        },
+        {
+          "rank": 2,
+          "minerId": "ridge",
+          "status": "eligible",
+          "score": 49.94360731810248,
+          "rewardWeight": 0.3834919195418526,
+          "metrics": {
+            "netReturn": 0.03435133196979434,
+            "sharpe": 0.8321317179775144,
+            "maxDrawdown": 0.1140629213154738,
+            "volatility": 0.13425092528108135,
+            "activeDecisions": 120,
+            "periods": 120
+          },
+          "leakageRisk": 0,
+          "flags": [],
+          "components": {
+            "excessReturn": 0.4662522954626924,
+            "riskAdjusted": 0.4160658589887572,
+            "drawdown": 0.6197902622817539,
+            "consistency": 0.6666666666666666
+          }
+        },
+        {
+          "rank": 3,
+          "minerId": "cash",
+          "status": "ineligible",
+          "score": 0,
+          "rewardWeight": 0,
+          "metrics": {
+            "netReturn": 0,
+            "sharpe": 0,
+            "maxDrawdown": 0,
+            "volatility": 0,
+            "activeDecisions": 0,
+            "periods": 120
+          },
+          "leakageRisk": 0,
+          "flags": [
+            "insufficient-active-decisions",
+            "non-positive-net-return",
+            "non-positive-or-undefined-sharpe"
+          ],
+          "components": {
+            "excessReturn": 0.12273897576474901,
+            "riskAdjusted": 0,
+            "drawdown": 1,
+            "consistency": 0
+          }
+        },
+        {
+          "rank": 4,
+          "minerId": "long-only",
+          "status": "ineligible",
+          "score": 0,
+          "rewardWeight": 0,
+          "metrics": {
+            "netReturn": -0.012273897576474901,
+            "sharpe": 0.014260647767196061,
+            "maxDrawdown": 0.19685703276306377,
+            "volatility": 0.2898096683444672,
+            "activeDecisions": 120,
+            "periods": 120
+          },
+          "leakageRisk": 0,
+          "flags": [
+            "non-positive-net-return"
+          ],
+          "components": {
+            "excessReturn": 0,
+            "riskAdjusted": 0.007130323883598031,
+            "drawdown": 0.3438098907897874,
+            "consistency": 0.3333333333333333
+          }
+        },
+        {
+          "rank": 5,
+          "minerId": "mean-reversion",
+          "status": "ineligible",
+          "score": 0,
+          "rewardWeight": 0,
+          "metrics": {
+            "netReturn": -0.11282117751830134,
+            "sharpe": -1.6312906941462704,
+            "maxDrawdown": 0.238951135521005,
+            "volatility": 0.20974063635530973,
+            "activeDecisions": 120,
+            "periods": 120
+          },
+          "leakageRisk": 0,
+          "flags": [
+            "non-positive-net-return",
+            "non-positive-or-undefined-sharpe"
+          ],
+          "components": {
+            "excessReturn": 0,
+            "riskAdjusted": 0,
+            "drawdown": 0.20349621492998327,
+            "consistency": 0.3333333333333333
+          }
+        },
+        {
+          "rank": 6,
+          "minerId": "future-leak",
+          "status": "disqualified",
+          "score": 0,
+          "rewardWeight": 0,
+          "metrics": {
+            "netReturn": 0,
+            "sharpe": 0,
+            "maxDrawdown": 0,
+            "volatility": 0,
+            "activeDecisions": 0,
+            "periods": 120
+          },
+          "leakageRisk": 1,
+          "flags": [
+            "future-feature-leak",
+            "insufficient-active-decisions",
+            "non-positive-net-return",
+            "non-positive-or-undefined-sharpe"
+          ],
+          "components": {
+            "excessReturn": 0.12273897576474901,
+            "riskAdjusted": 0,
+            "drawdown": 1,
+            "consistency": 0
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+.shell { max-width: 1320px; margin: 0 auto; padding: 30px 24px 64px; }
+.nav { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 28px; color: var(--muted); font-size: 13px; }
+.hero { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 18px; margin-bottom: 24px; }
+.eyebrow { color: var(--accent-2); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+.hero h1 { margin: 10px 0; font-size: clamp(27px, 4vw, 39px); letter-spacing: -.04em; }
+.hero p { color: var(--muted); font-size: 14px; line-height: 1.7; margin: 0; max-width: 730px; }
+.badge { border: 1px solid var(--border); background: var(--panel); border-radius: 999px; padding: 8px 12px; font-size: 12px; color: var(--accent-2); }
+.panel { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 22px; margin-top: 18px; min-width: 0; }
+.panel h2 { margin: 0 0 12px; font-size: 18px; }
+.panel p { line-height: 1.7; }
+.controls { display: grid; grid-template-columns: 1.1fr 1fr 1fr 1.3fr; gap: 16px; align-items: end; }
+.controls label { margin-top: 0; }
+.runButton { min-height: 41px; padding: 11px 16px; border-radius: 9px; border: none; background: var(--accent); color: #07142d; font-size: 14px; font-weight: 750; cursor: pointer; }
+.runButton:disabled { opacity: .55; cursor: wait; }
+.presets { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; margin-top: 14px; }
+.presets span { color: var(--muted); font-size: 11px; line-height: 1.6; }
+.presetButton { padding: 7px 10px; border: 1px solid var(--border); border-radius: 7px; background: var(--panel-2); color: var(--text); font-size: 12px; cursor: pointer; }
+.presetButton:disabled { opacity: .55; cursor: wait; }
+.presetButton:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 3px; }
+.runButton:focus-visible, .disclosure summary:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 4px; }
+.hint { color: var(--muted); font-size: 12px; margin: 14px 0 0; }
+.notice { border-left: 3px solid var(--accent-2); padding: 10px 14px; background: rgba(56,224,176,.06); color: var(--muted); font-size: 13px; line-height: 1.7; margin-top: 18px; }
+.error { color: var(--danger); margin-top: 14px; }
+.stats { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 12px; margin-top: 18px; }
+.stat { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+.stat span { display: block; color: var(--muted); font-size: 12px; }
+.stat strong { display: block; margin-top: 8px; font-size: 22px; font-variant-numeric: tabular-nums; }
+.sectionTitle { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
+.sectionTitle h2 { margin: 0; }
+.sectionTitle span { color: var(--muted); font-size: 12px; }
+.tableWrap { overflow-x: auto; }
+.table { width: 100%; border-collapse: collapse; font-size: 13px; white-space: nowrap; }
+.table th { color: var(--muted); text-align: right; font-size: 11px; font-weight: 500; padding: 12px 10px; border-bottom: 1px solid var(--border); }
+.table td { text-align: right; padding: 15px 10px; border-bottom: 1px solid var(--border); font-variant-numeric: tabular-nums; }
+.table th:first-child, .table td:first-child, .table th:nth-child(2), .table td:nth-child(2) { text-align: left; }
+.table tbody tr:last-child td { border-bottom: none; }
+.table tbody tr:hover { background: rgba(91,140,255,.035); }
+.winner { background: rgba(56,224,176,.04); }
+.name { display: block; font-weight: 600; }
+.sub { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; }
+.positive { color: var(--accent-2); }
+.negative { color: var(--danger); }
+.warning { color: var(--warn); }
+.status { font-size: 11px; padding: 4px 7px; border-radius: 6px; background: var(--panel-2); }
+.score { font-size: 17px; font-weight: 700; }
+.empty { padding: 48px 24px; text-align: center; color: var(--muted); }
+.empty strong { color: var(--text); display: block; margin-bottom: 12px; font-size: 20px; }
+.twoCols { display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; align-items: start; }
+.twoCols > .panel { height: calc(100% - 18px); }
+.disclosure { margin-top: 12px; border-top: 1px solid var(--border); padding-top: 12px; }
+.disclosure summary { cursor: pointer; font-size: 13px; line-height: 1.7; }
+.disclosure p { font-size: 13px; color: var(--muted); }
+.code { white-space: pre-wrap; overflow-wrap: anywhere; overflow-x: auto; background: var(--panel-2); color: var(--muted); border-radius: 8px; padding: 12px; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 11px; line-height: 1.7; max-height: 380px; }
+.formula { font-family: ui-monospace,SFMono-Regular,Menlo,monospace; color: var(--accent-2); font-size: 13px; line-height: 1.8; background: var(--panel-2); padding: 14px; border-radius: 8px; overflow-x: auto; }
+.plainList { color: var(--muted); font-size: 13px; padding-left: 20px; line-height: 1.9; }
+.trace { display: grid; gap: 0; }
+.step { display: grid; grid-template-columns: 28px 1fr; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.step:last-child { border-bottom: none; }
+.stepNumber { color: var(--accent-2); font-size: 12px; border: 1px solid var(--border); border-radius: 50%; width: 26px; height: 26px; display: grid; place-items: center; }
+.step strong { font-size: 12px; }
+.step p { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+.foldTable { margin-top: 8px; }
+.foldTable th, .foldTable td { padding: 9px 8px; }
+.footer { margin-top: 24px; color: var(--muted); font-size: 12px; line-height: 1.8; }
+@media (max-width: 1000px) { .twoCols { grid-template-columns: 1fr; } .twoCols > .panel { height: auto; } }
+@media (max-width: 700px) { .shell { padding: 22px 14px 42px; } .controls { grid-template-columns: 1fr 1fr; } .stats { grid-template-columns: 1fr 1fr; } .panel { padding: 16px; } .nav { flex-wrap: wrap; } }
+@media (prefers-reduced-motion: no-preference) { .runButton { transition: opacity .15s ease, background .15s ease; } }

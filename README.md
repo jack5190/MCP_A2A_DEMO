@@ -5,6 +5,30 @@
 > MCP-native, Agent-to-Agent (A2A) execution engine described below. See
 > [Local development](#local-development-demo) to run it.
 
+## Quant Subnet Mini Ideathon prototype
+
+An executable, local-only Miner → Validator scoring lab now reuses this MCP/A2A
+stack. It includes causal strategy tasks, a trained ridge baseline, independent
+out-of-sample metrics, leakage checks, a simulated leaderboard, tests, and a
+Chinese 60-minute presentation guide. No API key, wallet, TAO or real trades.
+
+```bash
+npm ci
+npm test
+npm run quant:demo                       # CLI over a real in-memory MCP connection
+npm run dev                             # open http://localhost:3000/quant
+```
+
+**Start here:** [完整说明、评分公式与60分钟演示](docs/quant-ideathon.md).
+The event's published rules require an idea presentation, **not code or a demo**;
+this prototype is an optional way to explain the mechanism.
+
+Default seed 42 at 5 bps fee + 5 bps slippage per side gives all miners zero
+reward: the honest strategies lose money after costs. The same seed with zero
+costs is an explicitly unrealistic diagnostic comparison, available via
+`npm run quant:demo -- --fee-bps 0 --slippage-bps 0`. Never select a profitable
+seed and present it as evidence of investment skill.
+
 ## Local development (demo)
 
 A minimal, self-contained implementation of the 0xAuto concept lives in this
@@ -17,7 +41,7 @@ monorepo (npm workspaces):
 
 ### Prerequisites
 
-- Node.js >= 20 (developed on Node 22)
+- Node.js >= 20.6 (Node 22 or 24 recommended)
 
 ### Install & run
 
